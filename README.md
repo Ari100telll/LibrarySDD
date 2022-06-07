@@ -44,7 +44,9 @@ All configurations should be in directory `config`
 ## Add endpoint
 
 All endpoints should be added in file `urls.py` using `UrlManager`
-```url_manager.add_endpoint('/ping', 'ping', ping, methods=['GET'])```
+```
+url_manager.add_endpoint('/ping', 'ping', ping, methods=['GET'])
+```
 
 <br>
 <br>
