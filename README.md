@@ -43,9 +43,16 @@ All configurations should be in directory `config`
 
 ## Add endpoint
 
-All endpoints should be added in file `urls.py` using `UrlManager`
+All endpoints should be added as flask blueprints and registered in the `main.py`
+```python
+test_bp = Blueprint('test_blueprint', __name__, url_prefix="/test")
+
+@test_bp.route("/", methods=['GET', 'POST'])
+def test():
+   pass
 ```
-url_manager.add_endpoint('/ping', 'ping', ping, methods=['GET'])
+```python
+app.register_blueprint(test_bp)
 ```
 
 <br>
