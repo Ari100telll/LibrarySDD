@@ -6,7 +6,7 @@ users_bp = Blueprint("users_blueprint", __name__, url_prefix="/users")
 
 
 @users_bp.route("/", methods=["GET"])
-def users():
+def get_all_users():
     users_mock = [
         {
             "id": 1,
@@ -53,7 +53,7 @@ def users():
 
 
 @users_bp.route("/<int:id>")
-def user(user_id: int):
+def get_user(user_id: int):
     user_mock = {
         "id": user_id,
         "name": "Kuipers",
