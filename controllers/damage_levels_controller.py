@@ -25,7 +25,7 @@ def get_all_damage_levels():
         },
         {
             "id": 4,
-            "category": "level4",
+            "level": "level4",
             "finePercentage": 30.0,
         },
         {
