@@ -93,7 +93,7 @@ def get_all_books():
 @books_bp.route("/<int:book_id>", methods=["GET"])
 def get_book(book_id: int):
     book = {
-        "id": 1,
+        "id": book_id,
         "pledge_price": 867,
         "quantity": 32,
         "title": "Right-sized interactive open architecture",
