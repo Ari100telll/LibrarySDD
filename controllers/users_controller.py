@@ -50,3 +50,17 @@ def users():
         },
     ]
     return json.dumps(users_mock)
+
+
+@users_bp.route("/<int:id>")
+def user(user_id: int):
+    user_mock = {
+        "id": user_id,
+        "name": "Kuipers",
+        "surname": "Alkyone",
+        "phoneNumber": "+380(048)69-85-63",
+        "address": "Ukraine, Chernigiv, Starobіlouska Vul., bld. 33, appt. 69",
+        "category": {"category": "reader1", "discountPercentage": 20.0},
+    }
+
+    return json.dumps(user_mock)
