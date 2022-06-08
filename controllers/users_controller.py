@@ -1,6 +1,4 @@
-import json
-
-from flask import Blueprint
+from flask import Blueprint, jsonify, request
 
 users_bp = Blueprint("users_blueprint", __name__, url_prefix="/users")
 
@@ -49,7 +47,7 @@ def get_all_users():
             "category": {"category": "reader5", "discountPercentage": 25.0},
         },
     ]
-    return json.dumps(users_mock)
+    return jsonify(users_mock)
 
 
 @users_bp.route("/<int:id>")
@@ -63,4 +61,39 @@ def get_user(user_id: int):
         "category": {"category": "reader1", "discountPercentage": 20.0},
     }
 
-    return json.dumps(user_mock)
+    return jsonify(user_mock)
+
+
+@users_bp.route("/", methods=["POST"])
+def create_user():
+    new_user = request.get_json()
+    new_user.id = 6
+    return jsonify(new_user)
+
+
+@users_bp.route("/<int:id>", methods=["PUT"])
+def update_user(user_id: int):
+    old_user_mock = {
+        "id": user_id,
+        "name": "Kuipers",
+        "surname": "Alkyone",
+        "phoneNumber": "+380(048)69-85-63",
+        "address": "Ukraine, Chernigiv, Starobіlouska Vul., bld. 33, appt. 69",
+        "category": {"category": "reader1", "discountPercentage": 20.0},
+    }
+
+    return jsonify(old_user_mock)
+
+
+@users_bp.route("/<int:id>", methods=["DELETE"])
+def delete_user(user_id: int):
+    deleted_user_mock = {
+        "id": user_id,
+        "name": "Kuipers",
+        "surname": "Alkyone",
+        "phoneNumber": "+380(048)69-85-63",
+        "address": "Ukraine, Chernigiv, Starobіlouska Vul., bld. 33, appt. 69",
+        "category": {"category": "reader1", "discountPercentage": 20.0},
+    }
+
+    return jsonify(deleted_user_mock)
