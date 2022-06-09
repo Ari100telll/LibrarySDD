@@ -12,9 +12,9 @@ def get_all_rents():
                 "id": 1,
                 "name": "Kuipers",
                 "surname": "Alkyone",
-                "phoneNumber": "+380(048)69-85-63",
+                "phone_number": "+380(048)69-85-63",
                 "address": "Ukraine, Chernigiv, Starobіlouska Vul., bld. 33, appt. 69",
-                "category": {"category": "reader1", "discountPercentage": 20.0},
+                "category": {"category": "reader1", "discount_percentage": 20.0},
             },
             "rent_start_date": "2021-09-19 07:12:15",
             "expected_rent_end_date": "2021-10-05 20:18:46",
@@ -32,7 +32,7 @@ def get_all_rents():
             "damage_level": {
                 "id": 1,
                 "level": "level1",
-                "finePercentage": 20.0,
+                "fine_percentage": 20.0,
             },
         },
         {
@@ -41,9 +41,9 @@ def get_all_rents():
                 "id": 2,
                 "name": "Micaela",
                 "surname": "Stack",
-                "phoneNumber": "+380(0542)34-17-38",
+                "phone_number": "+380(0542)34-17-38",
                 "address": "Ukraine, Rivne, Shevchenko Vul., bld. 21, appt. 32",
-                "category": {"category": "reader2", "discountPercentage": 25.0},
+                "category": {"category": "reader2", "discount_percentage": 25.0},
             },
             "rent_start_date": "2021-07-17 19:36:37",
             "expected_rent_end_date": "2021-09-16 17:09:06",
@@ -61,7 +61,7 @@ def get_all_rents():
             "damage_level": {
                 "id": 2,
                 "level": "level2",
-                "finePercentage": 25.0,
+                "fine_percentage": 25.0,
             },
         },
         {
@@ -70,9 +70,9 @@ def get_all_rents():
                 "id": 3,
                 "name": "Hanifa",
                 "surname": "Nicolai",
-                "phoneNumber": "+380(0692)49-94-67",
+                "phone_number": "+380(0692)49-94-67",
                 "address": "Ukraine, Priluki, Polova Vul., bld. 100, appt. 54",
-                "category": {"category": "reader3", "discountPercentage": 15.0},
+                "category": {"category": "reader3", "discount_percentage": 15.0},
             },
             "rent_start_date": "2021-10-29 00:32:46",
             "expected_rent_end_date": "2021-12-22 22:35:21",
@@ -90,7 +90,7 @@ def get_all_rents():
             "damage_level": {
                 "id": 3,
                 "level": "level3",
-                "finePercentage": 15.0,
+                "fine_percentage": 15.0,
             },
         },
         {
@@ -99,9 +99,9 @@ def get_all_rents():
                 "id": 5,
                 "name": "Zaman",
                 "surname": "Malloye",
-                "phoneNumber": "+380(06562)4-00-63",
+                "phone_number": "+380(06562)4-00-63",
                 "address": "Ukraine, Lviv, Naukova Vul., bld. 13, appt. 20",
-                "category": {"category": "reader5", "discountPercentage": 25.0},
+                "category": {"category": "reader5", "discount_percentage": 25.0},
             },
             "rent_start_date": "2022-03-15 08:42:58",
             "expected_rent_end_date": "2022-05-18 12:17:33",
@@ -119,7 +119,7 @@ def get_all_rents():
             "damage_level": {
                 "id": 4,
                 "category": "level4",
-                "finePercentage": 30.0,
+                "fine_percentage": 30.0,
             },
         },
         {
@@ -128,9 +128,9 @@ def get_all_rents():
                 "id": 4,
                 "name": "Alden",
                 "surname": "Gunnarr",
-                "phoneNumber": "+380(0652)22-17-09",
+                "phone_number": "+380(0652)22-17-09",
                 "address": "Ukraine, Kharkiv, Odeska Vul., bld. 2, appt. 26",
-                "category": {"category": "reader4", "discountPercentage": 30.0},
+                "category": {"category": "reader4", "discount_percentage": 30.0},
             },
             "rent_start_date": "2022-01-17 13:23:07",
             "expected_rent_end_date": "2022-04-14 23:58:38",
@@ -148,7 +148,7 @@ def get_all_rents():
             "damage_level": {
                 "id": 5,
                 "level": "level5",
-                "finePercentage": 45.0,
+                "fine_percentage": 45.0,
             },
         },
     ]
@@ -163,9 +163,9 @@ def get_rent(rent_id: int):
             "id": 1,
             "name": "Kuipers",
             "surname": "Alkyone",
-            "phoneNumber": "+380(048)69-85-63",
+            "phone_number": "+380(048)69-85-63",
             "address": "Ukraine, Chernigiv, Starobіlouska Vul., bld. 33, appt. 69",
-            "category": {"category": "reader1", "discountPercentage": 20.0},
+            "category": {"category": "reader1", "discount_percentage": 20.0},
         },
         "rent_start_date": "2022-02-19 18:09:33",
         "expected_rent_end_date": "2022-06-03 16:40:30",
@@ -183,7 +183,7 @@ def get_rent(rent_id: int):
         "damage_level": {
             "id": 3,
             "level": "level5",
-            "finePercentage": 45.0,
+            "fine_percentage": 45.0,
         },
     }
     return jsonify(rent)
@@ -204,9 +204,9 @@ def update_rent(rent_id: int):
             "id": 2,
             "name": "Micaela",
             "surname": "Stack",
-            "phoneNumber": "+380(0542)34-17-38",
+            "phone_number": "+380(0542)34-17-38",
             "address": "Ukraine, Rivne, Shevchenko Vul., bld. 21, appt. 32",
-            "category": {"category": "reader2", "discountPercentage": 25.0},
+            "category": {"category": "reader2", "discount_percentage": 25.0},
         },
         "rent_start_date": "2022-03-15 08:42:58",
         "expected_rent_end_date": "2022-05-18 12:17:33",
@@ -224,7 +224,7 @@ def update_rent(rent_id: int):
         "damage_level": {
             "id": 4,
             "category": "level4",
-            "finePercentage": 30.0,
+            "fine_percentage": 30.0,
         },
     }
     return jsonify(old_rent)
@@ -238,9 +238,9 @@ def delete_rent(rent_id: int):
             "id": 4,
             "name": "Alden",
             "surname": "Gunnarr",
-            "phoneNumber": "+380(0652)22-17-09",
+            "phone_number": "+380(0652)22-17-09",
             "address": "Ukraine, Kharkiv, Odeska Vul., bld. 2, appt. 26",
-            "category": {"category": "reader4", "discountPercentage": 30.0},
+            "category": {"category": "reader4", "discount_percentage": 30.0},
         },
         "rent_start_date": "2022-03-15 08:42:58",
         "expected_rent_end_date": "2022-05-18 12:17:33",
@@ -258,7 +258,7 @@ def delete_rent(rent_id: int):
         "damage_level": {
             "id": 4,
             "category": "level4",
-            "finePercentage": 30.0,
+            "fine_percentage": 30.0,
         },
     }
     return jsonify(deleted_rent)
@@ -338,7 +338,7 @@ def get_library_financial_report():
                     "surname": "Nicolai",
                     "phone_number": "+380(0692)49-94-67",
                     "address": "Ukraine, Priluki, Polova Vul., bld. 100, appt. 54",
-                    "category": {"category": "reader3", "discountPercentage": 15.0},
+                    "category": {"category": "reader3", "discount_percentage": 15.0},
                 },
                 "rent_start_date": "2022-01-12",
                 "expected_rent_end_date": "2021-02-12",
@@ -367,9 +367,9 @@ def get_library_financial_report():
                     "id": 4,
                     "name": "Alden",
                     "surname": "Gunnarr",
-                    "phoneNumber": "+380(0652)22-17-09",
+                    "phone_number": "+380(0652)22-17-09",
                     "address": "Ukraine, Kharkiv, Odeska Vul., bld. 2, appt. 26",
-                    "category": {"category": "reader4", "discountPercentage": 30.0},
+                    "category": {"category": "reader4", "discount_percentage": 30.0},
                 },
                 "rent_start_date": "2022-03-18",
                 "expected_rent_end_date": "2022-04-18",

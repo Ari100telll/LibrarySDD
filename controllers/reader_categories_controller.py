@@ -11,27 +11,27 @@ def get_all_reader_categories():
         {
             "id": 1,
             "category": "reader1",
-            "discountPercentage": 20.0,
+            "discount_percentage": 20.0,
         },
         {
             "id": 2,
             "category": "reader2",
-            "discountPercentage": 25.0,
+            "discount_percentage": 25.0,
         },
         {
             "id": 3,
             "category": "reader3",
-            "discountPercentage": 15.0,
+            "discount_percentage": 15.0,
         },
         {
             "id": 4,
             "category": "reader4",
-            "discountPercentage": 30.0,
+            "discount_percentage": 30.0,
         },
         {
             "id": 5,
             "category": "reader5",
-            "discountPercentage": 45.0,
+            "discount_percentage": 45.0,
         },
     ]
     return jsonify(reader_categories_mock)
@@ -42,7 +42,7 @@ def get_reader_category(reader_category_id: int):
     reader_category_mock = {
         "id": reader_category_id,
         "category": "reader5",
-        "discountPercentage": 45.0,
+        "discount_percentage": 45.0,
     }
 
     return jsonify(reader_category_mock)
@@ -60,7 +60,7 @@ def update_reader_category(reader_category_id: int):
     old_reader_category_mock = {
         "id": reader_category_id,
         "category": "reader5",
-        "discountPercentage": 45.0,
+        "discount_percentage": 45.0,
     }
 
     return jsonify(old_reader_category_mock)
@@ -71,7 +71,7 @@ def delete_reader_category(reader_category_id: int):
     deleted_user_mock = {
         "id": reader_category_id,
         "category": "reader5",
-        "discountPercentage": 45.0,
+        "discount_percentage": 45.0,
     }
 
     return jsonify(deleted_user_mock)
