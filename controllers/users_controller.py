@@ -103,7 +103,7 @@ def delete_user(user_id: int):
 def get_user_financial_report(user_id: int):
     financial_report_mock = {
         "user_id:": user_id,
-        "records": [
+        "rents": [
             {
                 "id": 1,
                 "rent_start_date": "2022-03-15",
@@ -200,6 +200,6 @@ def get_user_financial_report(user_id: int):
         "total_unpaid_rent": "411",
         "total_unpaid_fine": "262",
         "total_unpaid": "673",
-        "total_discount": "57",
+        "total_discount_price": "57",
     }
     return jsonify(financial_report_mock)
