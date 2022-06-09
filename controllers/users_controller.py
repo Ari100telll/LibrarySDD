@@ -355,3 +355,24 @@ def get_user_rents(user_id: int):
         },
     ]
     return jsonify(user_rents_mock)
+
+
+@users_bp.route("/<int:id>/rents:request", methods=["POST"])
+def request_rent(user_id: int):
+    rent_request = request.get_json()
+
+    rent = rent_request["rent"]
+    # payment_strategy = rent_request["payment_strategy"] just for example what body structure contains
+
+    created_rent_mock = {
+        "id": 100,
+        "user": rent["user"],
+        "rent_start_date": rent["rent_start_date"],
+        "expected_rent_end_date": rent["expected_rent_end_date"],
+        "rent_end_date": "",
+        "library_item": rent["library_item"],
+        "rent_price": 352,
+        "fine_price": 0,
+        "damage_level": "",
+    }
+    return jsonify(created_rent_mock)
