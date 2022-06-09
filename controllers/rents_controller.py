@@ -403,3 +403,24 @@ def get_library_financial_report():
         "total_discount_price": "57",
     }
     return jsonify(library_financial_report_mock)
+
+
+@rents_bp.route("/<int:id>:return", methods=["POST"])
+def return_rent(rent_id: int):
+    rent = request.get_json()
+    updated_rent_mock = {
+        "id": rent_id,
+        "user": rent["user"],
+        "rent_start_date": rent["rent_start_date"],
+        "expected_rent_end_date": rent["expected_rent_end_date"],
+        "rent_end_date": "2022-03-31 11:03:38",
+        "library_item": rent["library_item"],
+        "rent_price": rent["rent_price"],
+        "fine_price": 91,
+        "damage_level": {
+            "id": 3,
+            "level": "level5",
+            "fine_percentage": 45.0,
+        },
+    }
+    return jsonify(updated_rent_mock)
