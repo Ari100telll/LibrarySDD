@@ -97,3 +97,81 @@ def delete_user(user_id: int):
     }
 
     return jsonify(deleted_user_mock)
+
+
+@users_bp.route("/<int:id>/rents:summarize", methods=["GET"])
+def get_user_financial_report(user_id: int):
+    financial_report_mock = {
+        "user_id:": user_id,
+        "records": [
+            {
+                "id": 1,
+                "rent_start_date": "2022-03-15",
+                "expected_rent_end_date": "2022-05-18",
+                "rent_end_date": "2022-03-23",
+                "pledge_price": 398,
+                "rent_price": 342,
+                "fine_price": 0,
+                "discount_percentage": 25.0,
+                "fine_percentage": 0,
+                "library_item": {
+                    "id": 4,
+                    "title": "Re-engineered demand-driven structure",
+                    "author": "Bendix Dunsmuir",
+                    "genre": "primis",
+                },
+            },
+            {
+                "id": 2,
+                "rent_start_date": "2021-07-17",
+                "expected_rent_end_date": "2021-09-16",
+                "rent_end_date": "",
+                "pledge_price": 51,
+                "rent_price": 822,
+                "fine_price": 324,
+                "discount_percentage": 0,
+                "fine_percentage": 20,
+                "library_item": {
+                    "id": 2,
+                    "title": "Front-line dedicated local area network",
+                    "author": "Nickola Batalle",
+                    "genre": "sagittis",
+                },
+            },
+            {
+                "id": 3,
+                "rent_start_date": "2022-01-12",
+                "expected_rent_end_date": "2021-02-12",
+                "rent_end_date": "2021-02-12",
+                "pledge_price": 59,
+                "rent_price": 25,
+                "fine_price": 0,
+                "discount_percentage": 10,
+                "fine_percentage": 0,
+                "library_item": {
+                    "id": 3,
+                    "title": "Phased logistical emulation",
+                    "author": "Ritchie Saph",
+                    "genre": "nullam",
+                },
+            },
+            {
+                "id": 4,
+                "rent_start_date": "2022-03-18",
+                "expected_rent_end_date": "2021-04-18",
+                "rent_end_date": "",
+                "pledge_price": 398,
+                "rent_price": 150,
+                "fine_price": 20,
+                "discount_percentage": 0,
+                "fine_percentage": 2,
+                "library_item": {
+                    "id": 4,
+                    "title": "Re-engineered demand-driven structure",
+                    "author": "Bendix Dunsmuir",
+                    "genre": "primis",
+                },
+            },
+        ],
+    }
+    return jsonify(financial_report_mock)
