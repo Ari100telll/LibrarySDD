@@ -11,7 +11,7 @@ class Book(utils.db.Base):
     title = Column(String(50))
     author = Column(String(60))
     genre = Column(Enum(BookGenre))
-    rent = relationship("Rent", backref="book")
+    rents = relationship("Rent", backref="book")
 
     def __repr__(self):
         return str(self.__dict__)

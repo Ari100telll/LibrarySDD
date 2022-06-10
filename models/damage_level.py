@@ -9,7 +9,7 @@ class DamageLevel(utils.db.Base):
     id = Column(Integer, primary_key=True)
     level = Column(String(30))
     fine_percentage = Column(Numeric)
-    damage_level = relationship("Rent", backref="damage_level")
+    rents = relationship("Rent", backref="damage_level")
 
     def __repr__(self):
         return str(self.__dict__)

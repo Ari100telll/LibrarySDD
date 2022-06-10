@@ -12,7 +12,7 @@ class User(utils.db.Base):
     phone_number = Column(String(13))
     address = Column(String(40))
     category_id = Column(Integer, ForeignKey("reader_category.id"))
-    user = relationship("Rent", backref="user")
+    rents = relationship("Rent", backref="user")
 
     def __repr__(self):
         return str(self.__dict__)
