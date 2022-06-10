@@ -1,4 +1,6 @@
-from flask import Blueprint, jsonify, request
+from http import HTTPStatus
+
+from flask import Blueprint, jsonify, request, Response
 
 users_bp = Blueprint("users_blueprint", __name__, url_prefix="/users")
 
@@ -73,30 +75,14 @@ def create_user():
 
 @users_bp.route("/<int:id>", methods=["PUT"])
 def update_user(user_id: int):
-    old_user_mock = {
-        "id": user_id,
-        "name": "Kuipers",
-        "surname": "Alkyone",
-        "phone_number": "+380(048)69-85-63",
-        "address": "Ukraine, Chernigiv, Starobіlouska Vul., bld. 33, appt. 69",
-        "category": {"category": "reader1", "discount_percentage": 20.0},
-    }
-
-    return jsonify(old_user_mock)
+    updated_user = request.get_json()
+    updated_user["id"] = user_id
+    return jsonify(updated_user)
 
 
 @users_bp.route("/<int:id>", methods=["DELETE"])
 def delete_user(user_id: int):
-    deleted_user_mock = {
-        "id": user_id,
-        "name": "Kuipers",
-        "surname": "Alkyone",
-        "phone_number": "+380(048)69-85-63",
-        "address": "Ukraine, Chernigiv, Starobіlouska Vul., bld. 33, appt. 69",
-        "category": {"category": "reader1", "discount_percentage": 20.0},
-    }
-
-    return jsonify(deleted_user_mock)
+    return Response(status=HTTPStatus.NO_CONTENT)
 
 
 @users_bp.route("/<int:id>/rents:summarize", methods=["GET"])

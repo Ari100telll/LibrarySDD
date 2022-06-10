@@ -1,4 +1,6 @@
-from flask import Blueprint, jsonify, request
+from http import HTTPStatus
+
+from flask import Blueprint, jsonify, request, Response
 
 rents_bp = Blueprint("rents_blueprint", __name__, url_prefix="/rents")
 
@@ -198,70 +200,14 @@ def create_rent():
 
 @rents_bp.route("/<int:rent_id>", methods=["PUT"])
 def update_rent(rent_id: int):
-    old_rent = {
-        "id": rent_id,
-        "user": {
-            "id": 2,
-            "name": "Micaela",
-            "surname": "Stack",
-            "phone_number": "+380(0542)34-17-38",
-            "address": "Ukraine, Rivne, Shevchenko Vul., bld. 21, appt. 32",
-            "category": {"category": "reader2", "discount_percentage": 25.0},
-        },
-        "rent_start_date": "2022-03-15 08:42:58",
-        "expected_rent_end_date": "2022-05-18 12:17:33",
-        "rent_end_date": "2022-03-23 00:51:16",
-        "library_item": {
-            "id": 4,
-            "pledge_price": 398,
-            "quantity": 9,
-            "title": "Re-engineered demand-driven structure",
-            "author": "Bendix Dunsmuir",
-            "genre": "primis",
-        },
-        "rent_price": 342,
-        "fine_price": 0,
-        "damage_level": {
-            "id": 4,
-            "category": "level4",
-            "fine_percentage": 30.0,
-        },
-    }
-    return jsonify(old_rent)
+    updated_rent = request.get_json()
+    updated_rent["id"] = rent_id
+    return jsonify(updated_rent)
 
 
 @rents_bp.route("/<int:rent_id>", methods=["DELETE"])
 def delete_rent(rent_id: int):
-    deleted_rent = {
-        "id": rent_id,
-        "user": {
-            "id": 4,
-            "name": "Alden",
-            "surname": "Gunnarr",
-            "phone_number": "+380(0652)22-17-09",
-            "address": "Ukraine, Kharkiv, Odeska Vul., bld. 2, appt. 26",
-            "category": {"category": "reader4", "discount_percentage": 30.0},
-        },
-        "rent_start_date": "2022-03-15 08:42:58",
-        "expected_rent_end_date": "2022-05-18 12:17:33",
-        "rent_end_date": "2022-03-23 00:51:16",
-        "library_item": {
-            "id": 4,
-            "pledge_price": 398,
-            "quantity": 9,
-            "title": "Re-engineered demand-driven structure",
-            "author": "Bendix Dunsmuir",
-            "genre": "primis",
-        },
-        "rent_price": 342,
-        "fine_price": 0,
-        "damage_level": {
-            "id": 4,
-            "category": "level4",
-            "fine_percentage": 30.0,
-        },
-    }
-    return jsonify(deleted_rent)
+    return Response(status=HTTPStatus.NO_CONTENT)
 
 
 @rents_bp.route(":summarize", methods=["GET"])

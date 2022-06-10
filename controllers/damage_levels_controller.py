@@ -1,4 +1,6 @@
-from flask import Blueprint, jsonify, request
+from http import HTTPStatus
+
+from flask import Blueprint, jsonify, request, Response
 
 damage_levels_bp = Blueprint(
     "damage_levels_blueprint", __name__, url_prefix="/damage_levels"
@@ -57,21 +59,11 @@ def create_damage_level():
 
 @damage_levels_bp.route("/<int:id>", methods=["PUT"])
 def update_damage_level(damage_level_id: int):
-    old_damage_level_mock = {
-        "id": damage_level_id,
-        "level": "level5",
-        "fine_percentage": 45.0,
-    }
-
-    return jsonify(old_damage_level_mock)
+    updated_damage_level = request.get_json()
+    updated_damage_level["id"] = damage_level_id
+    return jsonify(updated_damage_level)
 
 
 @damage_levels_bp.route("/<int:id>", methods=["DELETE"])
 def delete_damage_level(damage_level_id: int):
-    deleted_damage_level_mock = {
-        "id": damage_level_id,
-        "level": "level5",
-        "fine_percentage": 45.0,
-    }
-
-    return jsonify(deleted_damage_level_mock)
+    return Response(status=HTTPStatus.NO_CONTENT)

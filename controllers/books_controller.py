@@ -1,4 +1,6 @@
-from flask import Blueprint, jsonify, request
+from http import HTTPStatus
+
+from flask import Blueprint, jsonify, request, Response
 
 books_bp = Blueprint("books_blueprint", __name__, url_prefix="/books")
 
@@ -112,25 +114,11 @@ def create_book():
 
 @books_bp.route("/<int:book_id>", methods=["PUT"])
 def update_book(book_id: int):
-    old_book = {
-        "id": book_id,
-        "pledge_price": 969,
-        "quantity": 39,
-        "title": "Progressive fault-tolerant alliance",
-        "author": "Trumann Gullberg",
-        "genre": "ornare",
-    }
-    return jsonify(old_book)
+    updated_book = request.get_json()
+    updated_book["id"] = book_id
+    return jsonify(updated_book)
 
 
 @books_bp.route("/<int:book_id>", methods=["DELETE"])
 def delete_book(book_id: int):
-    deleted_book = {
-        "id": book_id,
-        "pledge_price": 889,
-        "quantity": 48,
-        "title": "Total mobile firmware",
-        "author": "Winonah Szymanek",
-        "genre": "morbi",
-    }
-    return jsonify(deleted_book)
+    return Response(status=HTTPStatus.NO_CONTENT)

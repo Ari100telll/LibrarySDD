@@ -1,4 +1,6 @@
-from flask import Blueprint, jsonify, request
+from http import HTTPStatus
+
+from flask import Blueprint, jsonify, request, Response
 
 reader_categories_bp = Blueprint(
     "reader_categories_blueprint", __name__, url_prefix="/reader_categories"
@@ -57,21 +59,11 @@ def create_reader_category():
 
 @reader_categories_bp.route("/<int:id>", methods=["PUT"])
 def update_reader_category(reader_category_id: int):
-    old_reader_category_mock = {
-        "id": reader_category_id,
-        "category": "reader5",
-        "discount_percentage": 45.0,
-    }
-
-    return jsonify(old_reader_category_mock)
+    updated_reader_category = request.get_json()
+    updated_reader_category["id"] = reader_category_id
+    return jsonify(updated_reader_category)
 
 
 @reader_categories_bp.route("/<int:id>", methods=["DELETE"])
 def delete_reader_category(reader_category_id: int):
-    deleted_user_mock = {
-        "id": reader_category_id,
-        "category": "reader5",
-        "discount_percentage": 45.0,
-    }
-
-    return jsonify(deleted_user_mock)
+    return Response(status=HTTPStatus.NO_CONTENT)
