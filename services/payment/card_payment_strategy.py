@@ -15,7 +15,7 @@ class CardPaymentStrategy(PaymentStrategy):
                     PAYMENT_METHOD_STRING_MAX_LEN
                 ),
                 amount=amount,
-                user_full_name=str(user.get("name") + user.get("surname")),
+                user_full_name=str(user.get("name") + " " + user.get("surname")),
                 user_phone_number=user.get("phone_number"),
             )
         )
