@@ -10,8 +10,7 @@ class PaymentStrategyEnum(Enum):
 
 
 class PaymentStrategy(ABC):
+    # TODO: replace user field type to the User model
     @abstractmethod
-    def make_payment(
-        self, amount: Decimal, user: Any
-    ):  # TODO: replace user field type to the User model
+    def make_payment(self, amount: Decimal, user: Any):
         pass
