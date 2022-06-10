@@ -1,7 +1,7 @@
 from decimal import Decimal
 from typing import Any
 
-from config.settings.strings import BASE_PAYMENT_MESSAGE, PAYMENT_METHOD_STRING_MAX_LEN
+from config.settings.strings import BASE_PAYMENT_MESSAGE, PAYMENT_TAG_STRING_MAX_LEN
 from services.payment.payment_strategy import PaymentStrategy, PaymentStrategyEnum
 
 
@@ -12,7 +12,7 @@ class CardPaymentStrategy(PaymentStrategy):
         print(
             BASE_PAYMENT_MESSAGE.format(
                 method=PaymentStrategyEnum.CARD_PAYMENT.value.ljust(
-                    PAYMENT_METHOD_STRING_MAX_LEN
+                    PAYMENT_TAG_STRING_MAX_LEN
                 ),
                 amount=amount,
                 user_full_name=str(user.get("name") + " " + user.get("surname")),
