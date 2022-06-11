@@ -11,7 +11,8 @@ class User(utils.db.Base):
     surname = Column(String(50))
     phone_number = Column(String(13))
     address = Column(String(40))
-    category_id = Column(Integer, ForeignKey("reader_category.id"))
+    reader_category_id = Column(Integer, ForeignKey("reader_category.id"))
+    reader_category = relationship("ReaderCategory", backref="users")
     rents = relationship("Rent", backref="user")
 
     def __repr__(self):
