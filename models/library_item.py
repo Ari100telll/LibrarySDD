@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, Numeric
 
 import utils.db
+from utils.helpers import percentage_from
 
 
 class LibraryItem(utils.db.Base):
@@ -11,3 +12,7 @@ class LibraryItem(utils.db.Base):
 
     def __repr__(self):
         return str(self.__dict__)
+
+    def calculate_rent_price_per_day(self) -> float:
+        result = self.pledgePrice / self.quantity
+        return percentage_from(number=result, percent=25)
