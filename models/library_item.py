@@ -14,5 +14,5 @@ class LibraryItem(utils.db.Base):
         return str(self.__dict__)
 
     def calculate_rent_price_per_day(self) -> float:
-        result = self.pledgePrice / self.quantity
+        result = round(self.pledgePrice / self.quantity, 2)
         return percentage_from(number=result, percent=25)
