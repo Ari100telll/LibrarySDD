@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Date, ForeignKey, Integer, Numeric
+from sqlalchemy.orm import relationship
 
 import utils.db
 
@@ -14,6 +15,7 @@ class Rent(utils.db.Base):
     rent_price = Column(Numeric)
     fine_price = Column(Numeric)
     damage_level_id = Column(Integer, ForeignKey("damage_level.id"))
+    damage_level = relationship("DamageLevel", backref="rents")
 
     def __repr__(self):
         return str(self.__dict__)
