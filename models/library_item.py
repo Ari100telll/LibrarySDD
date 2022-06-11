@@ -13,6 +13,12 @@ class LibraryItem(db.Model):
     def __repr__(self):
         return str(self.__dict__)
 
+    @staticmethod
+    def from_dict(body: dict):
+        pledge_price = body["pledge_price"]
+        quantity = body["quantity"]
+        return LibraryItem(pledge_price=pledge_price, quantity=quantity)
+
     def calculate_rent_price_per_day(self) -> float:
         result = round(self.pledge_price / self.quantity, 2)
         return percentage_from(number=result, percent=DAILY_RENT_PRICE_PERCENT)

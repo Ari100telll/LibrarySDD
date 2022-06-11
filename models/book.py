@@ -14,3 +14,10 @@ class Book(db.Model):
 
     def __repr__(self):
         return str(self.__dict__)
+
+    @staticmethod
+    def from_dict(body: dict):
+        title = body["title"]
+        author = body["author"]
+        genre = body["genre"].upper()
+        return Book(title=title, author=author, genre=genre)
