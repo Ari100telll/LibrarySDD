@@ -1,2 +1,5 @@
-def percentage_from(number: float, percent: int) -> float:
+import decimal
+
+
+def percentage_from(number: decimal, percent: int) -> decimal:
     return (number * percent) / 100
