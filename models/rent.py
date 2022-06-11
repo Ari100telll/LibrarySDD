@@ -7,7 +7,8 @@ import utils.db
 class Rent(utils.db.Base):
     __tablename__ = "rent"
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey("library_user.id"))
+    library_user_id = Column(Integer, ForeignKey("library_user.id"))
+    library_user = relationship("User", backref="rents")
     rent_start_date = Column(Date)
     expected_rent_end_date = Column(Date)
     rent_end_date = Column(Date)
