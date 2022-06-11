@@ -21,13 +21,13 @@ class BookFactory(LibraryItemFactory):
 
     def update_library_item(self, item_id: int, body: dict) -> LibraryItem:
         library_item_update_body = {
-            "pledge_price": body["pledge_price"],
-            "quantity": body["quantity"],
+            "pledge_price": body.get("pledge_price", None),
+            "quantity": body.get("quantity", None),
         }
         book_update_body = {
-            "author": body["author"],
-            "title": body["title"],
-            "genre": body["genre"].upper(),
+            "author": body.get("author", None),
+            "title": body.get("title", None),
+            "genre": (body.get("genre", None) or "").upper(),
         }
 
         Book.query.filter_by(id=item_id).update(book_update_body)

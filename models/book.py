@@ -17,7 +17,7 @@ class Book(db.Model):
 
     @staticmethod
     def from_dict(body: dict):
-        title = body["title"]
-        author = body["author"]
-        genre = body["genre"].upper()
+        title = body.get("title", None)
+        author = body.get("author", None)
+        genre = (body.get("genre", None) or "").upper()
         return Book(title=title, author=author, genre=genre)

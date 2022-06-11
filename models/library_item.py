@@ -15,8 +15,8 @@ class LibraryItem(db.Model):
 
     @staticmethod
     def from_dict(body: dict):
-        pledge_price = body["pledge_price"]
-        quantity = body["quantity"]
+        pledge_price = body.get("pledge_price", None)
+        quantity = body.get("quantity", None)
         return LibraryItem(pledge_price=pledge_price, quantity=quantity)
 
     def calculate_rent_price_per_day(self) -> float:
