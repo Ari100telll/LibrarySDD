@@ -12,6 +12,7 @@ class Rent(utils.db.Base):
     expected_rent_end_date = Column(Date)
     rent_end_date = Column(Date)
     book_id = Column(Integer, ForeignKey("book.id"))
+    book = relationship("Book", backref="rents")
     rent_price = Column(Numeric)
     fine_price = Column(Numeric)
     damage_level_id = Column(Integer, ForeignKey("damage_level.id"))
