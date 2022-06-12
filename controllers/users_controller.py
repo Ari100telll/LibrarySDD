@@ -18,7 +18,6 @@ users_bp = Blueprint("users_blueprint", __name__, url_prefix="/users")
 @users_bp.route("/", methods=["GET"])
 def get_all_users():
     users = User.query.all()
-
     return users_schema.jsonify(users)
 
 
@@ -171,7 +170,7 @@ def get_user_rents(user_id: int):
     return rents_schema.jsonify(user_rents)
 
 
-@users_bp.route("/<int:id>/rents:request", methods=["POST"])
+@users_bp.route("/<int:user_id>/rents:request", methods=["POST"])
 def request_rent(user_id: int):
     rent_request = request.get_json()
 
