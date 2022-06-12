@@ -12,7 +12,7 @@ class CalculateRentPriceCommand(RentCommand):
         expected_end_datetime = datetime.fromordinal(
             rent.expected_rent_end_date.toordinal()
         )
-        rent_days_number = (rent_start_datetime - expected_end_datetime).days
+        rent_days_number = (expected_end_datetime - rent_start_datetime).days
         rent.rent_price = Decimal(
             rent.library_item.calculate_rent_price_per_day() * rent_days_number
         )

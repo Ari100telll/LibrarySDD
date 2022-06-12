@@ -13,6 +13,7 @@ class BaseRentHandler(RentHandler, ABC):
 
     def set_next(self, next_handler: RentHandler):
         self.next_handler = next_handler
+        return next_handler
 
     def handle(self, rent: Rent, payment_strategy: PaymentStrategy):
         self.command.execute(rent, payment_strategy)

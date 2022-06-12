@@ -1,10 +1,16 @@
+from datetime import datetime
+
 from flask import Blueprint, jsonify, request
 
+from models.library_item import LibraryItem
 from models.rent import Rent
+from models.user import User
 from resources import db
 from schemas.rent_schema import rent_schema, rents_schema
+from services.library_manager.library_manager import LibraryManager
+from services.payment.bank_account_payment_strategy import BankAccountPaymentStrategy
+from services.payment.card_payment_strategy import CardPaymentStrategy
 from services.reports.report_manager import ReportManager
-from utils.create_entity import create_entity
 from utils.delete_entity import delete_entity
 
 rents_bp = Blueprint("rents_blueprint", __name__, url_prefix="/rents")
@@ -27,8 +33,23 @@ def get_rent(rent_id: int):
 @rents_bp.route("/", methods=["POST"])
 def create_rent():
     body = request.get_json()
+    payment_type = body.get("payment_strategy")
+    if payment_type == "card":
+        payment_strategy = CardPaymentStrategy()
+    else:
+        payment_strategy = BankAccountPaymentStrategy()
 
-    return create_entity(body=body, model=Rent, unique_field=None)
+    rent_library_body = dict(
+        library_item=LibraryItem.query.get(body.get("library_item_id")),
+        user=User.query.filter_by(phone_number=body.get("phone_number")).first(),
+        expected_rent_end_date=datetime.strptime(
+            body.get("expected_rent_end_date"), "%Y-%m-%d"
+        ),
+        payment_strategy=payment_strategy,
+    )
+
+    rent = LibraryManager().rent_library_item(**rent_library_body)
+    return rent_schema.jsonify(rent)
 
 
 @rents_bp.route("/<int:rent_id>", methods=["PUT"])
@@ -63,22 +84,12 @@ def get_library_financial_report():
     return jsonify(library_financial_report)
 
 
-@rents_bp.route("/<int:id>:return", methods=["POST"])
+@rents_bp.route("/<int:rent_id>:return", methods=["POST"])
 def return_rent(rent_id: int):
-    rent = request.get_json()
-    updated_rent_mock = {
-        "id": rent_id,
-        "user": rent["user"],
-        "rent_start_date": rent["rent_start_date"],
-        "expected_rent_end_date": rent["expected_rent_end_date"],
-        "rent_end_date": "2022-03-31 11:03:38",
-        "library_item": rent["library_item"],
-        "rent_price": rent["rent_price"],
-        "fine_price": 91,
-        "damage_level": {
-            "id": 3,
-            "level": "level5",
-            "fine_percentage": 45.0,
-        },
-    }
-    return jsonify(updated_rent_mock)
+    rent_request = request.get_json()
+    rent = Rent.query.get(rent_id)
+
+    rent = LibraryManager().return_library_item(
+        rent=rent, payment_type=rent_request.get("payment_type")
+    )
+    return rent_schema.jsonify(rent)
