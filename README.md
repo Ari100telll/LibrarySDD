@@ -1,6 +1,12 @@
 # LibrarySDD
 
-## Set-up database
+A library management system backend created to manage books, users and rents, and to generate reports about library's financial state.
+
+![Library-Class diagram drawio](https://user-images.githubusercontent.com/57559975/173257194-886b4913-5f03-4e8c-85a3-1fbe514f3ee4.png)
+
+
+## How to run
+### Set-up database
 1. Enter postgres console
    ```
    sudo -u postgres psql
@@ -9,7 +15,7 @@
    ```
    CREATE DATABASE <your_database_name>;
    ```
-## Set-up project
+### Set-up project
 1. Install `python3.8`
 2. Clone repository
    ```
@@ -33,7 +39,7 @@
     DB_PORT=5432
     ```
 
-## Run project
+### Run project
 1. Enter to the venv _(`. LibrarySDD/venv/bin/activate`)_
 2. Install requirements `pip install -r requirements.txt`
 3. Run `pre-commit install`
