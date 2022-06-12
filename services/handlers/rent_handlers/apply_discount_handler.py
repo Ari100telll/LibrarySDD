@@ -1,14 +1,12 @@
 from models.rent import Rent
 from services.commands.apply_discount_command import ApplyDiscountCommand
-from services.commands.rent_command import RentCommand
 from services.handlers.rent_handlers.base_rent_handler import BaseRentHandler
 from services.payment.payment_strategy import PaymentStrategy
 
 
 class ApplyDiscountHandler(BaseRentHandler):
     def __init__(self):
-        super().__init__()
-        self.command: RentCommand = ApplyDiscountCommand()
+        super().__init__(command=ApplyDiscountCommand())
 
     def set_next(self, next_handler: BaseRentHandler) -> BaseRentHandler:
         self.next_handler = next_handler

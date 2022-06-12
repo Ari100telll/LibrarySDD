@@ -1,14 +1,12 @@
 from models.rent import Rent
 from services.commands.calculate_rent_price_command import CalculateRentPriceCommand
-from services.commands.rent_command import RentCommand
 from services.handlers.rent_handlers.base_rent_handler import BaseRentHandler
 from services.payment.payment_strategy import PaymentStrategy
 
 
 class CalculateRentPriceHandler(BaseRentHandler):
     def __init__(self):
-        super().__init__()
-        self.command: RentCommand = CalculateRentPriceCommand()
+        super().__init__(command=CalculateRentPriceCommand())
 
     def set_next(self, next_handler: BaseRentHandler) -> BaseRentHandler:
         self.next_handler = next_handler

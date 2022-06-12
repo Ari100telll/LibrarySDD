@@ -1,5 +1,4 @@
 from models.rent import Rent
-from services.commands.rent_command import RentCommand
 from services.commands.rent_request_payment_command import RentRequestPaymentCommand
 from services.handlers.rent_handlers.base_rent_handler import BaseRentHandler
 from services.payment.payment_strategy import PaymentStrategy
@@ -7,8 +6,7 @@ from services.payment.payment_strategy import PaymentStrategy
 
 class RentRequestPaymentHandler(BaseRentHandler):
     def __init__(self):
-        super().__init__()
-        self.command: RentCommand = RentRequestPaymentCommand()
+        super().__init__(command=RentRequestPaymentCommand())
 
     def set_next(self, next_handler: BaseRentHandler) -> BaseRentHandler:
         self.next_handler = next_handler
