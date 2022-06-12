@@ -7,6 +7,7 @@ from controllers.reader_categories_controller import reader_categories_bp
 from controllers.rents_controller import rents_bp
 from controllers.users_controller import users_bp
 from resources import db, ma
+from startup_script import run_startup_script
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
@@ -22,6 +23,7 @@ ma.init_app(app)
 
 with app.app_context():
     db.create_all()
+    run_startup_script()
 
 if __name__ == "__main__":
     app.run(debug=True)
