@@ -11,5 +11,15 @@ class User(db.Model):
     reader_category_id = db.Column(db.Integer, db.ForeignKey("reader_category.id"))
     reader_category = db.relationship("ReaderCategory", backref="users")
 
+    @staticmethod
+    def from_dict(body: dict):
+        name = body.get("name", None)
+        surname = body.get("surname", None)
+        phone_number = body.get("phone_number", None)
+        address = body.get("address", None)
+        reader_category_id = body.get("reader_category_id", None)
+        return User(name=name, surname=surname, phone_number=phone_number, address=address,
+                    reader_category_id=reader_category_id)
+
     def __repr__(self):
         return str(self.__dict__)
