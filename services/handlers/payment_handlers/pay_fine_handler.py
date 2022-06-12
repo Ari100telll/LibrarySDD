@@ -16,3 +16,5 @@ class PayFineHandler(BasePaymentHandler):
     def handle(self, rent: Rent, payment_strategy: PaymentStrategy):
         self.command = MakePaymentCommand(Decimal(rent.fine_price))
         self.command.execute(rent, payment_strategy)
+        if self.next_handler:
+            self.next_handler.handle(rent, payment_strategy)
