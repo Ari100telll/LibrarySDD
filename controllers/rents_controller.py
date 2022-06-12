@@ -1,16 +1,11 @@
-from datetime import datetime
-
 from flask import Blueprint, jsonify, request
 
-from models.library_item import LibraryItem
 from models.rent import Rent
-from models.user import User
 from resources import db
 from schemas.rent_schema import rent_schema, rents_schema
 from services.library_manager.library_manager import LibraryManager
-from services.payment.bank_account_payment_strategy import BankAccountPaymentStrategy
-from services.payment.card_payment_strategy import CardPaymentStrategy
 from services.reports.report_manager import ReportManager
+from utils.create_entity import create_entity
 from utils.delete_entity import delete_entity
 
 rents_bp = Blueprint("rents_blueprint", __name__, url_prefix="/rents")
@@ -33,23 +28,8 @@ def get_rent(rent_id: int):
 @rents_bp.route("/", methods=["POST"])
 def create_rent():
     body = request.get_json()
-    payment_type = body.get("payment_strategy")
-    if payment_type == "card":
-        payment_strategy = CardPaymentStrategy()
-    else:
-        payment_strategy = BankAccountPaymentStrategy()
 
-    rent_library_body = dict(
-        library_item=LibraryItem.query.get(body.get("library_item_id")),
-        user=User.query.filter_by(phone_number=body.get("phone_number")).first(),
-        expected_rent_end_date=datetime.strptime(
-            body.get("expected_rent_end_date"), "%Y-%m-%d"
-        ),
-        payment_strategy=payment_strategy,
-    )
-
-    rent = LibraryManager().rent_library_item(**rent_library_body)
-    return rent_schema.jsonify(rent)
+    return create_entity(body=body, model=Rent, unique_field=None)
 
 
 @rents_bp.route("/<int:rent_id>", methods=["PUT"])
