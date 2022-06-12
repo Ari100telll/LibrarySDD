@@ -1,6 +1,6 @@
 import random
 
-from models.damage_level import DamageLevel, DamageLevelValues
+from models.damage_level import DamageLevel
 from services.observer.subscriber import Subscriber
 
 
@@ -11,7 +11,7 @@ class Librarian(Subscriber):
     def inspect_library_item(self, context, callback):
         context.items_to_inspect.pop()
 
-        level = random.choice(list(DamageLevelValues))
-        random_damage_level = DamageLevel.query.filter_by(level=level.name).first()
+        damage_levels = DamageLevel.query.all()
+        random_damage_level = random.choice(damage_levels)
 
         callback(random_damage_level)
