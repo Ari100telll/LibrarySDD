@@ -10,8 +10,9 @@ class PayFineHandler(BasePaymentHandler):
     def __init__(self):
         super().__init__()
 
-    def set_next(self, next_handler: BasePaymentHandler):
+    def set_next(self, next_handler: BasePaymentHandler) -> BasePaymentHandler:
         self.next_handler = next_handler
+        return self.next_handler
 
     def handle(self, rent: Rent, payment_strategy: PaymentStrategy):
         self.command = MakePaymentCommand(Decimal(rent.fine_price))
