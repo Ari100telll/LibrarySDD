@@ -6,7 +6,7 @@ from services.payment.payment_strategy import PaymentStrategy
 
 class RentHandler(ABC):
     @abstractmethod
-    def set_next(self, next_handler: "RentHandler"):
+    def set_next(self, next_handler: "RentHandler") -> "RentHandler":
         pass
 
     @abstractmethod
