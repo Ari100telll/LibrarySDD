@@ -28,5 +28,12 @@ with app.app_context():
     db.create_all()
     run_startup_script()
 
+
+@app.after_request
+def add_headers(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+
+
 if __name__ == "__main__":
     app.run(debug=True)
