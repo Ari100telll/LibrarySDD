@@ -2,6 +2,11 @@ from http import HTTPStatus
 
 from flask import Blueprint, jsonify, request, Response
 
+from models.reader_category import ReaderCategory
+from resources import db
+
+from schemas.reader_category_schema import reader_categories_schema, reader_category_schema
+
 reader_categories_bp = Blueprint(
     "reader_categories_blueprint", __name__, url_prefix="/reader_categories"
 )
@@ -9,61 +14,56 @@ reader_categories_bp = Blueprint(
 
 @reader_categories_bp.route("/", methods=["GET"])
 def get_all_reader_categories():
-    reader_categories_mock = [
-        {
-            "id": 1,
-            "category": "reader1",
-            "discount_percentage": 20.0,
-        },
-        {
-            "id": 2,
-            "category": "reader2",
-            "discount_percentage": 25.0,
-        },
-        {
-            "id": 3,
-            "category": "reader3",
-            "discount_percentage": 15.0,
-        },
-        {
-            "id": 4,
-            "category": "reader4",
-            "discount_percentage": 30.0,
-        },
-        {
-            "id": 5,
-            "category": "reader5",
-            "discount_percentage": 45.0,
-        },
-    ]
-    return jsonify(reader_categories_mock)
+    reader_categories = ReaderCategory.query.all()
+
+    return reader_categories_schema.jsonify(reader_categories)
 
 
-@reader_categories_bp.route("/<int:id>")
+@reader_categories_bp.route("/<int:reader_category_id>")
 def get_reader_category(reader_category_id: int):
-    reader_category_mock = {
-        "id": reader_category_id,
-        "category": "reader5",
-        "discount_percentage": 45.0,
-    }
+    single_reader_category = ReaderCategory.query.get_or_404(reader_category_id)
 
-    return jsonify(reader_category_mock)
+    return reader_category_schema.jsonify(single_reader_category)
 
 
 @reader_categories_bp.route("/", methods=["POST"])
 def create_reader_category():
-    new_reader_category = request.get_json()
-    new_reader_category.id = 6
-    return jsonify(new_reader_category)
+    body = request.get_json()
+    category = body.get('category')
+    reader_category_already_exists = ReaderCategory.query.filter_by(category=category).first()
+
+    if reader_category_already_exists:
+        return {'err': f'Category {category} already exists'}, 400
+
+    try:
+        new_reader_category = ReaderCategory.from_dict(body)
+        db.session.add(new_reader_category)
+        db.session.commit()
+        return jsonify(body), 201
+
+    except Exception as e:
+        return str(e)
 
 
-@reader_categories_bp.route("/<int:id>", methods=["PUT"])
+@reader_categories_bp.route("/<int:reader_category_id>", methods=["PUT"])
 def update_reader_category(reader_category_id: int):
-    updated_reader_category = request.get_json()
-    updated_reader_category["id"] = reader_category_id
-    return jsonify(updated_reader_category)
+    body = request.get_json()
+
+    reader_category_update_body = {
+        "category": body.get("category", None),
+        "discount_percentage": body.get("discount_percentage", None),
+    }
+
+    ReaderCategory.query.filter_by(id=reader_category_id).update(reader_category_update_body)
+    db.session.commit()
+
+    return jsonify(reader_category_update_body)
 
 
-@reader_categories_bp.route("/<int:id>", methods=["DELETE"])
+@reader_categories_bp.route("/<int:reader_category_id>", methods=["DELETE"])
 def delete_reader_category(reader_category_id: int):
+    reader_category = ReaderCategory.query.get_or_404(reader_category_id)
+
+    db.session.delete(reader_category)
+    db.session.commit()
     return Response(status=HTTPStatus.NO_CONTENT)
