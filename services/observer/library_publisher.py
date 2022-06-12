@@ -2,10 +2,11 @@ from typing import List
 
 from models.library_item import LibraryItem
 from services.observer.subscriber import Subscriber
-from services.singleton.singleton import SingletonClass
+from services.singleton.singleton import singleton
 
 
-class LibraryPublisher(SingletonClass):
+@singleton
+class LibraryPublisher:
     def __init__(self):
         self.subscribers: List[Subscriber] = []
         self.items_to_inspect: List[LibraryItem] = []
