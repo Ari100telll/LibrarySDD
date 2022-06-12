@@ -4,8 +4,10 @@ from models.library_item import LibraryItem
 from models.rent import Rent
 from services.factory.library_item_factory import LibraryItemFactory
 from services.reports.user_finance_report_generator import UserFinanceReportGenerator
+from services.singleton.singleton import singleton
 
 
+@singleton
 class ReportManager:
     def __init__(self, library_item_factory: LibraryItemFactory):
         self.library_item_factory = library_item_factory
