@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 
 from config.settings.base import DATABASE_URL
 from controllers.books_controller import books_bp
@@ -10,6 +11,7 @@ from resources import db, ma
 from startup_script import run_startup_script
 
 app = Flask(__name__)
+CORS(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 
 app.register_blueprint(users_bp)
