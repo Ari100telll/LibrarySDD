@@ -1,16 +1,12 @@
-from http import HTTPStatus
-
-from flask import Blueprint, Response, jsonify, request
-
-from schemas.rent_schema import rents_schema
-from services.reports.report_manager import ReportManager
-
-from resources import db
-from utils.create_entity import create_entity
-from utils.delete_entity import delete_entity
+from flask import Blueprint, jsonify, request
 
 from models.user import User
+from resources import db
+from schemas.rent_schema import rents_schema
 from schemas.user_schema import user_schema, users_schema
+from services.reports.report_manager import ReportManager
+from utils.create_entity import create_entity
+from utils.delete_entity import delete_entity
 
 users_bp = Blueprint("users_blueprint", __name__, url_prefix="/users")
 
@@ -32,7 +28,7 @@ def get_user(user_id: int):
 def create_user():
     body = request.get_json()
 
-    return create_entity(body=body, model=User, unique_field='phone_number')
+    return create_entity(body=body, model=User, unique_field="phone_number")
 
 
 @users_bp.route("/<int:user_id>", methods=["PUT"])
@@ -44,7 +40,7 @@ def update_user(user_id: int):
         "surname": body.get("surname", None),
         "phone_number": body.get("phone_number", None),
         "address": body.get("address", None),
-        "reader_category_id": body.get("reader_category_id", None)
+        "reader_category_id": body.get("reader_category_id", None),
     }
 
     User.query.filter_by(id=user_id).update(user_update_body)
