@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 from decimal import Decimal
 from enum import Enum
-from typing import Any
+
+from models.user import User
 
 
 class PaymentStrategyEnum(Enum):
@@ -10,7 +11,6 @@ class PaymentStrategyEnum(Enum):
 
 
 class PaymentStrategy(ABC):
-    # TODO: replace user field type to the User model
     @abstractmethod
-    def make_payment(self, amount: Decimal, user: Any):
+    def make_payment(self, amount: Decimal, user: User):
         pass
