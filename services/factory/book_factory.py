@@ -27,7 +27,7 @@ class BookFactory(LibraryItemFactory):
         book_update_body = {
             "author": body.get("author", None),
             "title": body.get("title", None),
-            "genre": (body.get("genre", None) or "").upper(),
+            "genre": body.get("genre", "").upper(),
         }
 
         Book.query.filter_by(id=item_id).update(book_update_body)

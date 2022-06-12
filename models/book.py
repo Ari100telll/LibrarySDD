@@ -19,5 +19,5 @@ class Book(db.Model):
     def from_dict(body: dict):
         title = body.get("title", None)
         author = body.get("author", None)
-        genre = (body.get("genre", None) or "").upper()
+        genre = body.get("genre", "").upper()
         return Book(title=title, author=author, genre=genre)
