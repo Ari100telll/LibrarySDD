@@ -13,7 +13,7 @@ class BookSchema(ma.SQLAlchemyAutoSchema):
         include_relationships = True
 
     id = auto_field()
-    library_item = ma.Nested(LibraryItemSchema(), exclude=["id"])
+    library_item = ma.Nested(LibraryItemSchema(), exclude=["id", "book"])
     genre = EnumField(BookGenre)
 
 
