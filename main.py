@@ -12,6 +12,7 @@ from startup_script import run_startup_script
 
 app = Flask(__name__)
 CORS(app)
+app.config["CORS_HEADERS"] = "Content-Type"
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
 
 app.register_blueprint(users_bp)

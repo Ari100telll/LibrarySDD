@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from flask import Blueprint, jsonify, request, Response
+from flask import Blueprint, Response, jsonify, request
 
 users_bp = Blueprint("users_blueprint", __name__, url_prefix="/users")
 
@@ -69,7 +69,7 @@ def get_user(user_id: int):
 @users_bp.route("/", methods=["POST"])
 def create_user():
     new_user = request.get_json()
-    new_user.id = 6
+    new_user["id"] = 6
     return jsonify(new_user)
 
 
