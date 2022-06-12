@@ -1,4 +1,14 @@
+from enum import Enum
+
 from resources import db
+
+
+class DamageLevelValues(Enum):
+    DESTROYED = "DESTROYED"
+    MAJOR = "MAJOR"
+    MINOR = "MINOR"
+    AFFECTED = "AFFECTED"
+    INACCESSIBLE = "INACCESSIBLE"
 
 
 class DamageLevel(db.Model):
