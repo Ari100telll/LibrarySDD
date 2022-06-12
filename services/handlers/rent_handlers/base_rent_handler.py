@@ -5,8 +5,6 @@ from services.handlers.rent_handler import RentHandler
 
 
 class BaseRentHandler(RentHandler, ABC):
-    def __init__(
-        self, next_handler: "BaseRentHandler" = None, command: RentCommand = None
-    ):
-        self.next_handler: BaseRentHandler = next_handler
+    def __init__(self, command: RentCommand, next_handler: "BaseRentHandler" = None):
         self.command: RentCommand = command
+        self.next_handler: BaseRentHandler = next_handler

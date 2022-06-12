@@ -7,9 +7,6 @@ from services.payment.payment_strategy import PaymentStrategy
 
 
 class PayFineHandler(BasePaymentHandler):
-    def __init__(self):
-        super().__init__()
-
     def set_next(self, next_handler: BasePaymentHandler) -> BasePaymentHandler:
         self.next_handler = next_handler
         return self.next_handler
