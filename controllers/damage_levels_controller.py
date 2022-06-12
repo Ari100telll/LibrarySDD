@@ -2,6 +2,14 @@ from http import HTTPStatus
 
 from flask import Blueprint, jsonify, request, Response
 
+from models.damage_level import DamageLevel
+from resources import db
+
+from utils.create_entity import create_entity
+
+from schemas.damage_level_schema import damage_levels_schema, damage_level_schema
+from utils.delete_entity import delete_entity
+
 damage_levels_bp = Blueprint(
     "damage_levels_blueprint", __name__, url_prefix="/damage_levels"
 )
@@ -9,61 +17,40 @@ damage_levels_bp = Blueprint(
 
 @damage_levels_bp.route("/", methods=["GET"])
 def get_all_damage_levels():
-    damage_levels_mock = [
-        {
-            "id": 1,
-            "level": "level1",
-            "fine_percentage": 20.0,
-        },
-        {
-            "id": 2,
-            "level": "level2",
-            "fine_percentage": 25.0,
-        },
-        {
-            "id": 3,
-            "level": "level3",
-            "fine_percentage": 15.0,
-        },
-        {
-            "id": 4,
-            "level": "level4",
-            "fine_percentage": 30.0,
-        },
-        {
-            "id": 5,
-            "level": "level5",
-            "fine_percentage": 45.0,
-        },
-    ]
-    return jsonify(damage_levels_mock)
+    damage_levels = DamageLevel.query.all()
+
+    return damage_levels_schema.jsonify(damage_levels)
 
 
-@damage_levels_bp.route("/<int:id>")
+@damage_levels_bp.route("/<int:damage_level_id>")
 def get_damage_level(damage_level_id: int):
-    damage_level_mock = {
-        "id": damage_level_id,
-        "level": "level5",
-        "fine_percentage": 45.0,
-    }
+    single_damage_level = DamageLevel.query.get_or_404(damage_level_id)
 
-    return jsonify(damage_level_mock)
+    return damage_level_schema.jsonify(single_damage_level)
 
 
 @damage_levels_bp.route("/", methods=["POST"])
 def create_damage_level():
-    new_damage_level = request.get_json()
-    new_damage_level.id = 6
-    return jsonify(new_damage_level)
+    body = request.get_json()
+
+    return create_entity(body=body, model=DamageLevel, unique_field='level')
 
 
-@damage_levels_bp.route("/<int:id>", methods=["PUT"])
+@damage_levels_bp.route("/<int:damage_level_id>", methods=["PUT"])
 def update_damage_level(damage_level_id: int):
-    updated_damage_level = request.get_json()
-    updated_damage_level["id"] = damage_level_id
-    return jsonify(updated_damage_level)
+    body = request.get_json()
+
+    damage_level_update_body = {
+        "level": body.get("level", None),
+        "fine_percentage": body.get("fine_percentage", None),
+    }
+
+    DamageLevel.query.filter_by(id=damage_level_id).update(damage_level_update_body)
+    db.session.commit()
+
+    return jsonify(damage_level_update_body)
 
 
-@damage_levels_bp.route("/<int:id>", methods=["DELETE"])
+@damage_levels_bp.route("/<int:damage_level_id>", methods=["DELETE"])
 def delete_damage_level(damage_level_id: int):
-    return Response(status=HTTPStatus.NO_CONTENT)
+    return delete_entity(model=DamageLevel, entity_id=damage_level_id)
