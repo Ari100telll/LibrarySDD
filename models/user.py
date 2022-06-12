@@ -10,6 +10,7 @@ class User(db.Model):
     address = db.Column(db.String(40))
     reader_category_id = db.Column(db.Integer, db.ForeignKey("reader_category.id"))
     reader_category = db.relationship("ReaderCategory", backref="users")
+    rents = db.relationship("Rent", backref=db.backref("library_user"))
 
     @staticmethod
     def from_dict(body: dict):

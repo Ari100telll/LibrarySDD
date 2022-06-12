@@ -1,12 +1,10 @@
 from resources import db
 
-from models.user import User
 
 class Rent(db.Model):
     __tablename__ = "rent"
     id = db.Column(db.Integer, primary_key=True)
     library_user_id = db.Column(db.Integer, db.ForeignKey("library_user.id"))
-    user = db.relationship("User", backref="rents")
     rent_start_date = db.Column(db.Date)
     expected_rent_end_date = db.Column(db.Date)
     rent_end_date = db.Column(db.Date)
