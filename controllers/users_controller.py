@@ -2,90 +2,61 @@ from http import HTTPStatus
 
 from flask import Blueprint, jsonify, request, Response
 
+from resources import db
+from utils.create_entity import create_entity
+from utils.delete_entity import delete_entity
+
+from models.user import User
+from schemas.user_schema import user_schema, users_schema
+
 users_bp = Blueprint("users_blueprint", __name__, url_prefix="/users")
 
 
 @users_bp.route("/", methods=["GET"])
 def get_all_users():
-    users_mock = [
-        {
-            "id": 1,
-            "name": "Kuipers",
-            "surname": "Alkyone",
-            "phone_number": "+380(048)69-85-63",
-            "address": "Ukraine, Chernigiv, Starobіlouska Vul., bld. 33, appt. 69",
-            "category": {"category": "reader1", "discount_percentage": 20.0},
-        },
-        {
-            "id": 2,
-            "name": "Micaela",
-            "surname": "Stack",
-            "phone_number": "+380(0542)34-17-38",
-            "address": "Ukraine, Rivne, Shevchenko Vul., bld. 21, appt. 32",
-            "category": {"category": "reader2", "discount_percentage": 25.0},
-        },
-        {
-            "id": 3,
-            "name": "Hanifa",
-            "surname": "Nicolai",
-            "phone_number": "+380(0692)49-94-67",
-            "address": "Ukraine, Priluki, Polova Vul., bld. 100, appt. 54",
-            "category": {"category": "reader3", "discount_percentage": 15.0},
-        },
-        {
-            "id": 4,
-            "name": "Alden",
-            "surname": "Gunnarr",
-            "phone_number": "+380(0652)22-17-09",
-            "address": "Ukraine, Kharkiv, Odeska Vul., bld. 2, appt. 26",
-            "category": {"category": "reader4", "discount_percentage": 30.0},
-        },
-        {
-            "id": 5,
-            "name": "Zaman",
-            "surname": "Malloye",
-            "phone_number": "+380(06562)4-00-63",
-            "address": "Ukraine, Lviv, Naukova Vul., bld. 13, appt. 20",
-            "category": {"category": "reader5", "discount_percentage": 25.0},
-        },
-    ]
-    return jsonify(users_mock)
+    users = User.query.all()
+
+    return users_schema.jsonify(users)
 
 
-@users_bp.route("/<int:id>")
+@users_bp.route("/<int:user_id>")
 def get_user(user_id: int):
-    user_mock = {
-        "id": user_id,
-        "name": "Kuipers",
-        "surname": "Alkyone",
-        "phone_number": "+380(048)69-85-63",
-        "address": "Ukraine, Chernigiv, Starobіlouska Vul., bld. 33, appt. 69",
-        "category": {"category": "reader1", "discount_percentage": 20.0},
-    }
+    single_user = User.query.get_or_404(user_id)
 
-    return jsonify(user_mock)
+    return user_schema.jsonify(single_user)
 
 
 @users_bp.route("/", methods=["POST"])
 def create_user():
-    new_user = request.get_json()
-    new_user.id = 6
-    return jsonify(new_user)
+    body = request.get_json()
+
+    return create_entity(body=body, model=User, unique_field='phone_number')
 
 
-@users_bp.route("/<int:id>", methods=["PUT"])
+@users_bp.route("/<int:user_id>", methods=["PUT"])
 def update_user(user_id: int):
-    updated_user = request.get_json()
-    updated_user["id"] = user_id
-    return jsonify(updated_user)
+    body = request.get_json()
+
+    user_update_body = {
+        "name": body.get("name", None),
+        "surname": body.get("surname", None),
+        "phone_number": body.get("phone_number", None),
+        "address": body.get("address", None),
+        "reader_category_id": body.get("reader_category_id", None)
+    }
+
+    User.query.filter_by(id=user_id).update(user_update_body)
+    db.session.commit()
+
+    return jsonify(user_update_body)
 
 
-@users_bp.route("/<int:id>", methods=["DELETE"])
+@users_bp.route("/<int:user_id>", methods=["DELETE"])
 def delete_user(user_id: int):
-    return Response(status=HTTPStatus.NO_CONTENT)
+    return delete_entity(model=User, entity_id=user_id)
 
 
-@users_bp.route("/<int:id>/rents:summarize", methods=["GET"])
+@users_bp.route("/<int:user_id>/rents:summarize", methods=["GET"])
 def get_user_financial_report(user_id: int):
     financial_report_mock = {
         "user_id:": user_id,
@@ -191,7 +162,7 @@ def get_user_financial_report(user_id: int):
     return jsonify(financial_report_mock)
 
 
-@users_bp.route("/<int:id>/rents", methods=["GET"])
+@users_bp.route("/<int:user_id>/rents", methods=["GET"])
 def get_user_rents(user_id: int):
     user_rents_mock = [
         {

@@ -1,14 +1,14 @@
 from http import HTTPStatus
 
-from flask import Blueprint, jsonify, request, Response
+from flask import Blueprint, jsonify, request
 
 from models.damage_level import DamageLevel
 from resources import db
 
 from utils.create_entity import create_entity
+from utils.delete_entity import delete_entity
 
 from schemas.damage_level_schema import damage_levels_schema, damage_level_schema
-from utils.delete_entity import delete_entity
 
 damage_levels_bp = Blueprint(
     "damage_levels_blueprint", __name__, url_prefix="/damage_levels"
