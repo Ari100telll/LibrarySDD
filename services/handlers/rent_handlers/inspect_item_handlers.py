@@ -11,6 +11,6 @@ class InspectItemHandler(BaseRentHandler):
 
     def handle(self, rent: Rent, payment_strategy: PaymentStrategy):
         self.command = InspectItemCommand()
-        rent, payment_strategy = self.command.execute(rent, payment_strategy)
+        self.command.execute(rent, payment_strategy)
         if self.next_handler:
             self.next_handler.handle(rent, payment_strategy)

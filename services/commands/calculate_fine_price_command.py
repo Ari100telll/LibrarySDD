@@ -11,4 +11,3 @@ class CalculateFinePriceCommand(RentCommand):
             percent=rent.damage_level.fine_percentage,
         )
         rent.fine_price = fine_price
-        return rent, payment_strategy

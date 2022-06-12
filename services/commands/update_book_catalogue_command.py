@@ -10,5 +10,3 @@ class UpdateBookCatalogueCommand(RentCommand):
         else:
             items_difference = 1
         rent.library_item.quantity += items_difference
-
-        return rent, payment_strategy

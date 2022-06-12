@@ -11,5 +11,3 @@ class InspectItemCommand(RentCommand):
 
         library_publisher = LibraryPublisher()
         library_publisher.add_item_to_inspect(rent.library_item, callback)
-
-        return rent, payment_strategy

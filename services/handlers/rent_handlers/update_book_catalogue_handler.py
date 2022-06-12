@@ -13,6 +13,6 @@ class UpdateBookCatalogueHandler(BaseRentHandler):
         self.next_handler = next_handler
 
     def handle(self, rent: Rent, payment_strategy: PaymentStrategy):
-        rent, payment_strategy = self.command.execute(rent, payment_strategy)
+        self.command.execute(rent, payment_strategy)
         if self.next_handler:
             self.next_handler.handle(rent, payment_strategy)
