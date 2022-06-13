@@ -69,9 +69,12 @@ class ReportGenerator:
             "discount_price": discount_price,
             "rent_price_after_discount": rent.rent_price,
             "rent_price_before_discount": rent.rent_price + discount_price,
-            "damage_fine_percentage": rent.damage_level.fine_percentage,
-            "fine_price": rent.fine_price,
-            "total_price": rent.fine_price + rent.rent_price,
+            "damage_fine_percentage": rent.damage_level.fine_percentage
+            if rent.damage_level
+            else 0,
+            "fine_price": rent.fine_price if rent.fine_price else 0,
+            "total_price": (rent.fine_price if rent.fine_price else 0)
+            + rent.rent_price,
             "library_item": library_item_schema.dump(rent.library_item),
         }
 
