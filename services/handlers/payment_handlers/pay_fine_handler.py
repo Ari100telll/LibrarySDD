@@ -7,10 +7,6 @@ from services.payment.payment_strategy import PaymentStrategy
 
 
 class PayFineHandler(BasePaymentHandler):
-    def set_next(self, next_handler: BasePaymentHandler) -> BasePaymentHandler:
-        self.next_handler = next_handler
-        return self.next_handler
-
     def handle(self, rent: Rent, payment_strategy: PaymentStrategy):
         self.command = MakePaymentCommand(Decimal(rent.fine_price))
         self.command.execute(rent, payment_strategy)
