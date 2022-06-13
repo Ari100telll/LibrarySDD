@@ -1,9 +1,13 @@
+from datetime import datetime
+
 from flask import Blueprint, jsonify, request
 
+from models.library_item import LibraryItem
 from models.user import User
 from resources import db
-from schemas.rent_schema import rents_schema
+from schemas.rent_schema import rent_schema, rents_schema
 from schemas.user_schema import user_schema, users_schema
+from services.library_manager.library_manager import LibraryManager
 from services.reports.report_manager import ReportManager
 from utils.create_entity import create_entity
 from utils.delete_entity import delete_entity
@@ -70,18 +74,14 @@ def get_user_rents(user_id: int):
 def request_rent(user_id: int):
     rent_request = request.get_json()
 
-    rent = rent_request["rent"]
-    # payment_strategy = rent_request["payment_strategy"] just for example what body structure contains
+    rent_library_body = dict(
+        library_item=LibraryItem.query.get(rent_request.get("library_item_id")),
+        user=User.query.get(user_id),
+        expected_rent_end_date=datetime.strptime(
+            rent_request.get("expected_rent_end_date"), "%Y-%m-%d"
+        ),
+        payment_type=rent_request.get("payment_type"),
+    )
 
-    created_rent_mock = {
-        "id": 100,
-        "user": rent["user"],
-        "rent_start_date": rent["rent_start_date"],
-        "expected_rent_end_date": rent["expected_rent_end_date"],
-        "rent_end_date": "",
-        "library_item": rent["library_item"],
-        "rent_price": 352,
-        "fine_price": 0,
-        "damage_level": "",
-    }
-    return jsonify(created_rent_mock)
+    rent = LibraryManager().rent_library_item(**rent_library_body)
+    return rent_schema.jsonify(rent)

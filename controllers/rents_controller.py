@@ -3,6 +3,7 @@ from flask import Blueprint, jsonify, request
 from models.rent import Rent
 from resources import db
 from schemas.rent_schema import rent_schema, rents_schema
+from services.library_manager.library_manager import LibraryManager
 from services.reports.report_manager import ReportManager
 from utils.create_entity import create_entity
 from utils.delete_entity import delete_entity
@@ -63,22 +64,12 @@ def get_library_financial_report():
     return jsonify(library_financial_report)
 
 
-@rents_bp.route("/<int:id>:return", methods=["POST"])
+@rents_bp.route("/<int:rent_id>:return", methods=["POST"])
 def return_rent(rent_id: int):
-    rent = request.get_json()
-    updated_rent_mock = {
-        "id": rent_id,
-        "user": rent["user"],
-        "rent_start_date": rent["rent_start_date"],
-        "expected_rent_end_date": rent["expected_rent_end_date"],
-        "rent_end_date": "2022-03-31 11:03:38",
-        "library_item": rent["library_item"],
-        "rent_price": rent["rent_price"],
-        "fine_price": 91,
-        "damage_level": {
-            "id": 3,
-            "level": "level5",
-            "fine_percentage": 45.0,
-        },
-    }
-    return jsonify(updated_rent_mock)
+    rent_request = request.get_json()
+    rent = Rent.query.get(rent_id)
+
+    rent = LibraryManager().return_library_item(
+        rent=rent, payment_type=rent_request.get("payment_type")
+    )
+    return rent_schema.jsonify(rent)

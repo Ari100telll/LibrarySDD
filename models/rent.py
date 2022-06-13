@@ -5,15 +5,16 @@ class Rent(db.Model):
     __tablename__ = "rent"
     id = db.Column(db.Integer, primary_key=True)
     library_user_id = db.Column(db.Integer, db.ForeignKey("library_user.id"))
+    library_user = db.relationship("User")
     rent_start_date = db.Column(db.Date)
     expected_rent_end_date = db.Column(db.Date)
     rent_end_date = db.Column(db.Date)
     library_item_id = db.Column(db.Integer, db.ForeignKey("library_item.id"))
-    library_item = db.relationship("LibraryItem", backref="rents")
+    library_item = db.relationship("LibraryItem")
     rent_price = db.Column(db.Numeric)
     fine_price = db.Column(db.Numeric)
     damage_level_id = db.Column(db.Integer, db.ForeignKey("damage_level.id"))
-    damage_level = db.relationship("DamageLevel", backref="rents")
+    damage_level = db.relationship("DamageLevel")
 
     @staticmethod
     def from_dict(body: dict):
@@ -26,10 +27,16 @@ class Rent(db.Model):
         fine_price = body.get("fine_price", None)
         damage_level_id = body.get("damage_level_id", None)
 
-        return Rent(library_user_id=library_user_id, rent_start_date=rent_start_date,
-                    expected_rent_end_date=expected_rent_end_date, rent_end_date=rent_end_date,
-                    library_item_id=library_item_id, rent_price=rent_price, fine_price=fine_price,
-                    damage_level_id=damage_level_id)
+        return Rent(
+            library_user_id=library_user_id,
+            rent_start_date=rent_start_date,
+            expected_rent_end_date=expected_rent_end_date,
+            rent_end_date=rent_end_date,
+            library_item_id=library_item_id,
+            rent_price=rent_price,
+            fine_price=fine_price,
+            damage_level_id=damage_level_id,
+        )
 
     def __repr__(self):
         return str(self.__dict__)

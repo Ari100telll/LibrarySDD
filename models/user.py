@@ -10,7 +10,6 @@ class User(db.Model):
     address = db.Column(db.String(40))
     reader_category_id = db.Column(db.Integer, db.ForeignKey("reader_category.id"))
     reader_category = db.relationship("ReaderCategory", backref="users")
-    rents = db.relationship("Rent", backref=db.backref("library_user"))
 
     @staticmethod
     def from_dict(body: dict):
@@ -19,8 +18,13 @@ class User(db.Model):
         phone_number = body.get("phone_number", None)
         address = body.get("address", None)
         reader_category_id = body.get("reader_category_id", None)
-        return User(name=name, surname=surname, phone_number=phone_number, address=address,
-                    reader_category_id=reader_category_id)
+        return User(
+            name=name,
+            surname=surname,
+            phone_number=phone_number,
+            address=address,
+            reader_category_id=reader_category_id,
+        )
 
     def __repr__(self):
         return str(self.__dict__)

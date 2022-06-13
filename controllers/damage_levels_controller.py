@@ -1,14 +1,10 @@
-from http import HTTPStatus
-
 from flask import Blueprint, jsonify, request
 
 from models.damage_level import DamageLevel
 from resources import db
-
+from schemas.damage_level_schema import damage_level_schema, damage_levels_schema
 from utils.create_entity import create_entity
 from utils.delete_entity import delete_entity
-
-from schemas.damage_level_schema import damage_levels_schema, damage_level_schema
 
 damage_levels_bp = Blueprint(
     "damage_levels_blueprint", __name__, url_prefix="/damage_levels"
@@ -33,7 +29,7 @@ def get_damage_level(damage_level_id: int):
 def create_damage_level():
     body = request.get_json()
 
-    return create_entity(body=body, model=DamageLevel, unique_field='level')
+    return create_entity(body=body, model=DamageLevel, unique_field="level")
 
 
 @damage_levels_bp.route("/<int:damage_level_id>", methods=["PUT"])

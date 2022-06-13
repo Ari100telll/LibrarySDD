@@ -1,11 +1,11 @@
-from http import HTTPStatus
-
-from flask import Blueprint, jsonify, request, Response
+from flask import Blueprint, jsonify, request
 
 from models.reader_category import ReaderCategory
 from resources import db
-
-from schemas.reader_category_schema import reader_categories_schema, reader_category_schema
+from schemas.reader_category_schema import (
+    reader_categories_schema,
+    reader_category_schema,
+)
 from utils.create_entity import create_entity
 from utils.delete_entity import delete_entity
 
@@ -32,7 +32,7 @@ def get_reader_category(reader_category_id: int):
 def create_reader_category():
     body = request.get_json()
 
-    return create_entity(body=body, model=ReaderCategory, unique_field='category')
+    return create_entity(body=body, model=ReaderCategory, unique_field="category")
 
 
 @reader_categories_bp.route("/<int:reader_category_id>", methods=["PUT"])
@@ -44,7 +44,9 @@ def update_reader_category(reader_category_id: int):
         "discount_percentage": body.get("discount_percentage", None),
     }
 
-    ReaderCategory.query.filter_by(id=reader_category_id).update(reader_category_update_body)
+    ReaderCategory.query.filter_by(id=reader_category_id).update(
+        reader_category_update_body
+    )
     db.session.commit()
 
     return jsonify(reader_category_update_body)

@@ -10,7 +10,7 @@ class RentSchema(ma.SQLAlchemyAutoSchema):
         model = Rent
         include_relationships = True
 
-    library_user = ma.Nested(UserSchema(), exclude=["rents"])
+    library_user = ma.Nested(UserSchema())
     library_item = ma.Nested(LibraryItemSchema())
     damage_level = ma.Nested(DamageLevelSchema())
 
