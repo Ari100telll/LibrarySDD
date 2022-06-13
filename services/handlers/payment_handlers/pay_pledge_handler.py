@@ -5,10 +5,6 @@ from services.payment.payment_strategy import PaymentStrategy
 
 
 class PayPledgeHandler(BasePaymentHandler):
-    def set_next(self, next_handler: BasePaymentHandler) -> BasePaymentHandler:
-        self.next_handler = next_handler
-        return self.next_handler
-
     def handle(self, rent: Rent, payment_strategy: PaymentStrategy):
         self.command = MakePaymentCommand(rent.library_item.pledge_price)
         self.command.execute(rent, payment_strategy)

@@ -12,3 +12,7 @@ class BasePaymentHandler(RentHandler, ABC):
     ):
         self.command: MakePaymentCommand = command
         self.next_handler: BasePaymentHandler = next_handler
+
+    def set_next(self, next_handler: "BasePaymentHandler") -> "BasePaymentHandler":
+        self.next_handler = next_handler
+        return self.next_handler
